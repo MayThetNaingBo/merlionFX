@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Currency Forecast</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Select2 JS (after jQuery) -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<style>
+  
+  .custom-gradient-button {
+  font-size: 15px;
+  padding: 12px 24px;
+  background: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  color: black;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.custom-gradient-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.custom-gradient-button:hover::before {
+  left: 100%;
+}
+
+.custom-gradient-button:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+#result {
+  display: none;
+  background: #ffffff;
+  border-left: 6px solid #667eea;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(102, 126, 234, 0.2);
+  margin-top: 30px;
+}
+
+#result h5 {
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+#last, #predicted {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+</style>
+
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="mb-0">📊 Currency Forecast ( Tomorrow )</h3>
+  <a href="/services" class="custom-gradient-button">Back to Dashboard</a>
+</div>
+      <div class="mb-4">
+      <label class="form-label"><strong>Choose FX Pair</strong></label>
+        <select class="form-select" id="pair">
+          {% for pair in fxPairs %}
+            <option value="{{ pair }}">{{ pair[:3] }}/{{ pair[3:] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button class="custom-gradient-button" onclick="getForecast()">Get Forecast</button>
+
+      <div class="mt-4" id="result">
+  <h5>🔗 Results</h5>
+  <p id="last"></p>
+  <p id="predicted"></p>
+</div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function () {
+    $('#pair').select2({ placeholder: "Search FX pair", width: '100%' });
+  });
+
+  function getForecast() {
+    const pair = $('#pair').val();  // e.g. "AED/AUD"
+      // e.g. AEDAUD
+const base = pair.substring(0, 3);
+const quote = pair.substring(3);
+
+    $.get(`/api/forecast?pair=${pair}`, function (data) {
+      if (data.predicted_rate) {
+        $('#result').show();
+        $('#last').html(`<strong>Last Known Rate:</strong> 1 ${base} = ${data.last_known} ${quote}`);
+        $('#predicted').html(`<strong>Predicted Rate (Tomorrow):</strong> 1 ${base} = ${data.predicted_rate} ${quote}`);
+      } else {
+        alert("⚠️ Failed to fetch forecast.");
+      }
+    });
+  }
+</script>
+
+</script>
+
+
+</body>
+</html>
