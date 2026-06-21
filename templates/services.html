@@ -10,10 +10,24 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    body { background-color: #f4f9ff; padding: 20px; }
-    .card { border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .select2-container { width: 100% !important; }
-    #fxChart { max-height: 400px; }
+    body {
+      background: #f4f9ff;
+      padding: 20px;
+    }
+
+    .card {
+      border-radius: 16px;
+      border: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .select2-container {
+      width: 100% !important;
+    }
+
+    #fxChart {
+      max-height: 400px;
+    }
 
     .header {
       position: fixed;
@@ -31,77 +45,6 @@
       transition: all 0.3s ease;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo img {
-      height: 60px;
-      border-radius: 12px;
-    }
-
-    .logo img:hover {
-      transform: scale(1.05);
-    }
-
-    .logo-text {
-      font-size: 20px;
-      font-weight: 700;
-      color: #2d3748;
-      letter-spacing: -0.5px;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 12px;
-    }
-
-    .nav-buttons button {
-      font-size: 15px;
-      padding: 12px 24px;
-      background: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      color: black;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .nav-buttons button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .nav-buttons button:hover::before {
-      left: 100%;
-    }
-
-    .nav-buttons button:hover {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-    }
-
-    #fx {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-    }
-    
     .logo-container {
       display: flex;
       align-items: center;
@@ -115,18 +58,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 1.5rem;
-      font-weight: bold;
       padding-top: 7px;
     }
 
     .logo {
       font-size: 1.5rem;
       font-weight: 700;
-      color:#242424;
+      color: #242424;
     }
 
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-buttons button,
     .custom-gradient-button {
       font-size: 15px;
       padding: 12px 24px;
@@ -144,21 +90,7 @@
       display: inline-block;
     }
 
-    .custom-gradient-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .custom-gradient-button:hover::before {
-      left: 100%;
-    }
-
+    .nav-buttons button:hover,
     .custom-gradient-button:hover {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -166,119 +98,122 @@
       box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
     }
 
-    .dashboard-intro-card {
-      border: none;
-      border-radius: 22px;
-      overflow: hidden;
-      background: white;
-      box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
-    }
-
-    .dashboard-intro-header {
-      padding: 26px 30px;
+    #fx {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      background: linear-gradient(135deg, #2563eb 0%, #6d28d9 100%);
-      position: relative;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    }
+
+    .dashboard-card {
+      background: white;
+      border-radius: 18px;
       overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
     }
 
-    .dashboard-intro-header::after {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.14);
-      top: -90px;
-      right: -50px;
+    .dashboard-card-header {
+      padding: 24px 28px;
+      border-bottom: 1px solid #eef2f7;
+      background: linear-gradient(135deg, #ffffff 0%, #f7f9ff 100%);
     }
 
-    .dashboard-intro-header h4 {
+    .dashboard-card-header h4 {
       margin: 0;
+      font-size: 25px;
       font-weight: 800;
-      font-size: 28px;
-      position: relative;
-      z-index: 2;
+      color: #1f2937;
     }
 
-    .dashboard-intro-header p {
-      margin: 8px 0 0;
-      color: rgba(255, 255, 255, 0.9);
-      position: relative;
-      z-index: 2;
+    .dashboard-card-body {
+      padding: 26px 28px 30px;
     }
 
-    .dashboard-intro-body {
-      padding: 28px 30px;
-    }
-
-    .dashboard-description {
+    .dashboard-card-body > p {
+      color: #4b5563;
       font-size: 16px;
-      color: #475467;
-      margin-bottom: 22px;
       line-height: 1.7;
+      margin-bottom: 22px;
     }
 
-    .feature-box-grid {
+    .feature-list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
-    .feature-box {
-      padding: 18px;
-      border-radius: 16px;
+    .feature-item {
       background: #f8fbff;
       border: 1px solid #e6eefb;
-      transition: all 0.3s ease;
+      border-radius: 14px;
+      padding: 18px;
+      transition: all 0.25s ease;
     }
 
-    .feature-box:hover {
-      transform: translateY(-4px);
+    .feature-item:hover {
       background: white;
-      box-shadow: 0 12px 26px rgba(102, 126, 234, 0.16);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(102, 126, 234, 0.14);
     }
 
-    .feature-box-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-      font-size: 21px;
-      background: linear-gradient(135deg, #eff6ff 0%, #ede9fe 100%);
+    .feature-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
     }
 
-    .feature-box-title {
+    .feature-title {
       font-weight: 700;
       color: #1f2937;
       margin-bottom: 5px;
     }
 
-    .feature-box-text {
+    .feature-desc {
       font-size: 14px;
       color: #667085;
-      margin: 0;
       line-height: 1.5;
+      margin: 0;
+    }
+
+    .card-header {
+      background: white;
+      border-bottom: 1px solid #eef2f7;
+      padding: 18px 22px;
+      border-radius: 16px 16px 0 0 !important;
+    }
+
+    .card-header h4 {
+      margin: 0;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #344054;
+    }
+
+    .form-select {
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    #newsBox {
+      border-radius: 12px;
+      border: 1px solid #eef2f7;
+      background: #f8fbff;
     }
 
     @media (max-width: 992px) {
-      .feature-box-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
       .header {
         padding: 15px 30px;
+      }
+
+      .feature-list {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 768px) {
-      .feature-box-grid {
-        grid-template-columns: 1fr;
-      }
-
       .header {
         flex-direction: column;
         gap: 14px;
@@ -286,6 +221,17 @@
 
       .container {
         margin-top: 160px !important;
+      }
+
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+
+      .d-flex.justify-content-around {
+        flex-direction: column;
+        gap: 14px;
+        align-items: stretch;
+        text-align: center;
       }
     }
   </style>
@@ -296,7 +242,9 @@
   <!-- Header Navbar -->
   <div class="header">
     <div class="logo-container">
-      <div class="logo-icon"><img src="../static/images/Merlion.png" style="width: 250%; height: 250%;"></div>
+      <div class="logo-icon">
+        <img src="../static/images/Merlion.png" style="width: 250%; height: 250%;">
+      </div>
       <div class="logo">Merlion Digital Bank</div>
     </div>
 
@@ -309,53 +257,52 @@
 
   <div class="container py-1" style="margin-top: 100px;">
     <!-- Welcome Header -->
-    <div class="dashboard-intro-card mb-4">
-      <div class="dashboard-intro-header">
+    <div class="dashboard-card mb-4">
+      <div class="dashboard-card-header">
         <h4>Welcome to Merlion FX Dashboard</h4>
-        <p>Real-time currency insights, forecasting tools, and secure checkout in one place.</p>
       </div>
 
-      <div class="dashboard-intro-body">
-        <p class="dashboard-description">
+      <div class="dashboard-card-body">
+        <p>
           Explore live exchange data, currency trends, forecasting tools, Central Bank of Myanmar rates,
-          MMK conversion, and secure PayPal checkout from a clean FX dashboard.
+          MMK conversion, and secure PayPal checkout from one clean FX dashboard.
         </p>
 
-        <div class="feature-box-grid">
-          <div class="feature-box">
-            <div class="feature-box-icon">📊</div>
-            <div class="feature-box-title">Real-Time FX Rates</div>
-            <p class="feature-box-text">Track live exchange rates from external financial APIs.</p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <div class="feature-title">Real-Time FX Rates</div>
+            <p class="feature-desc">View live exchange rate data from external financial APIs.</p>
           </div>
 
-          <div class="feature-box">
-            <div class="feature-box-icon">📈</div>
-            <div class="feature-box-title">Currency Charts</div>
-            <p class="feature-box-text">Analyze currency movement with interactive trend charts.</p>
+          <div class="feature-item">
+            <div class="feature-icon">📈</div>
+            <div class="feature-title">Currency Charts</div>
+            <p class="feature-desc">Analyze historical movement using interactive trend charts.</p>
           </div>
 
-          <div class="feature-box">
-            <div class="feature-box-icon">🤖</div>
-            <div class="feature-box-title">AI Forecasting</div>
-            <p class="feature-box-text">Use machine learning to estimate future currency trends.</p>
+          <div class="feature-item">
+            <div class="feature-icon">🤖</div>
+            <div class="feature-title">AI Forecasting</div>
+            <p class="feature-desc">Use machine learning to estimate future currency trends.</p>
           </div>
 
-          <div class="feature-box">
-            <div class="feature-box-icon">🏦</div>
-            <div class="feature-box-title">CBM Rates</div>
-            <p class="feature-box-text">View official exchange rates from the Central Bank of Myanmar.</p>
+          <div class="feature-item">
+            <div class="feature-icon">🏦</div>
+            <div class="feature-title">CBM Rates</div>
+            <p class="feature-desc">Check official exchange rates from the Central Bank of Myanmar.</p>
           </div>
 
-          <div class="feature-box">
-            <div class="feature-box-icon">💱</div>
-            <div class="feature-box-title">MMK Converter</div>
-            <p class="feature-box-text">Convert foreign currency values into Myanmar Kyat.</p>
+          <div class="feature-item">
+            <div class="feature-icon">💱</div>
+            <div class="feature-title">MMK Converter</div>
+            <p class="feature-desc">Convert foreign currency values into Myanmar Kyat.</p>
           </div>
 
-          <div class="feature-box">
-            <div class="feature-box-icon">🔒</div>
-            <div class="feature-box-title">PayPal Checkout</div>
-            <p class="feature-box-text">Process secure demo checkout payments using PayPal.</p>
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-title">PayPal Checkout</div>
+            <p class="feature-desc">Complete secure demo payments using PayPal checkout.</p>
           </div>
         </div>
       </div>
