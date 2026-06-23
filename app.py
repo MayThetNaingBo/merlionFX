@@ -54,10 +54,18 @@ def get_paypal_access_token():
 @app.route("/")
 def landing_page():
     try:
+        if not access_key:
+            raise ValueError("ACCESS_KEY is missing. Please add ACCESS_KEY in Render Environment Variables.")
+
         url = f"https://api.exchangerate.host/live?access_key={access_key}&currencies=SGD"
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         data = response.json()
-        rate = round(data['quotes']['USDSGD'], 4)
+
+        if data.get("success") is not True:
+            raise ValueError(f"Exchange API error: {data}")
+
+        rate = round(data["quotes"]["USDSGD"], 4)
+
     except Exception as e:
         print("❌ Failed to fetch USD/SGD rate:", e)
         rate = None
